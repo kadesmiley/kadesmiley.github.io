@@ -280,6 +280,14 @@ body {
 
 .article-card img {
 	flex: 0 0 220px;
+	width: 220px; /* flex-basis alone only sets the flex layout's
+	                 hypothetical size, not the `width` property itself —
+	                 without this, a replaced element with both a definite
+	                 height (below) and an intrinsic aspect ratio still
+	                 computes its width from that ratio instead of the
+	                 220px basis, so images with a different native
+	                 aspect ratio than 220:175 rendered wider or narrower
+	                 than their siblings. Setting width explicitly pins it. */
 	height: 100%; /* fill the fixed card height directly, instead of
 	                 letting the image's own aspect ratio size it */
 	object-fit: cover;
