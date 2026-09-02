@@ -11,6 +11,9 @@ body {
 }
 
 /* ---------- SHARED FIXED NAV ---------- */
+/* Always fixed, always this one style, on every page (including home) —
+   this avoids nav text becoming unreadable when it scrolls over
+   different-colored backgrounds. */
 .site-nav {
 	position: fixed;
 	top: 0;
@@ -21,27 +24,13 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	padding: 1.5em 3em;
-}
-
-/* default = light background, used on inner pages (Research, CV, etc.) */
-.site-nav {
-	background: rgba(235, 235, 240, 0.9);
+	background: rgba(255, 255, 255, 0.85);
 	color: #111;
 }
 
 .site-nav a {
 	color: #111;
 	text-decoration: none;
-}
-
-/* dark-hero variant = used on the homepage, sits over a photo */
-.site-nav.on-dark {
-	background: transparent;
-	color: #fff;
-}
-
-.site-nav.on-dark a {
-	color: #fff;
 }
 
 .site-logo {
@@ -68,47 +57,11 @@ body {
 }
 
 /* ---------- HERO (homepage only) ---------- */
+/* Just the nav sitting over a photo — no text overlay. */
 .hero {
-	position: relative;
-	min-height: 100vh;
+	height: 60vh;
 	background: url("../../images/pic06.jpg") no-repeat center center;
 	background-size: cover;
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-end;
-	color: #fff;
-}
-
-.hero::before {
-	content: "";
-	position: absolute;
-	inset: 0;
-	background: rgba(0, 0, 0, 0.35);
-	z-index: 0;
-}
-
-.hero > * {
-	position: relative;
-	z-index: 1;
-}
-
-.hero-intro {
-	max-width: 640px;
-	padding: 0 3em;
-	margin-bottom: 4em;
-	font-size: 1.3em;
-	line-height: 1.5;
-}
-
-.hero-statement {
-	padding: 0 0.15em 0.1em 0.15em;
-}
-
-.hero-statement h1 {
-	font-size: 6vw;
-	font-weight: 800;
-	line-height: 1;
-	margin: 0;
 }
 
 /* ---------- REUSABLE SPLIT ROW ---------- */
@@ -116,8 +69,9 @@ body {
    Stack as many .split-row sections as you need, in order. */
 .split-row {
 	display: flex;
-	min-height: 80vh;
+	min-height: 100vh;
 	padding-top: var(--nav-height); /* keeps content clear of the fixed nav */
+	padding-bottom: 4em; /* buffer before whatever comes next */
 }
 
 .split-row.bg-light { background: #ebebf0; }
