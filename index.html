@@ -10,41 +10,44 @@
 	<title>Kade Smiley</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-	<!-- Keep main.css for now in case other pages (left/right/no-sidebar) still use it -->
-	<link rel="stylesheet" href="assets/css/main.css" />
-	<!-- New stylesheet just for this hub-style homepage -->
-	<link rel="stylesheet" href="assets/css/home.css" />
-	<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	<link rel="stylesheet" href="assets/css/site.css" />
 </head>
-<body class="homepage is-preload">
+<body class="homepage">
 
 	<!-- ============ HERO ============ -->
 	<header class="hero">
 
-		<!-- Top bar: logo left, nav right -->
-		<div class="hero-topbar">
-			<a href="index.html" class="hero-logo">TITLE</a>
-			<nav class="hero-nav">
-				<ul>
-					<li><a href="index.html" class="active">Home</a></li>
-					<li><a href="research.html">Research</a></li>
-					<li><a href="cv.html">CV</a></li>
-					<li><a href="outreach.html">Outreach</a></li>
-					<li><a href="contact.html">Contact</a></li>
-					<li><a href="essays.html">Essays</a></li>
-				</ul>
-			</nav>
+		<nav class="site-nav on-dark">
+			<a href="index.html" class="site-logo">TITLE</a>
+			<ul>
+				<li><a href="index.html" class="active">Home</a></li>
+				<li><a href="research.html">Research</a></li>
+				<li><a href="cv.html">CV</a></li>
+				<li><a href="outreach.html">Outreach</a></li>
+				<li><a href="contact.html">Contact</a></li>
+				<li><a href="essays.html">Essays</a></li>
+			</ul>
+		</nav>
+
+		<div class="hero-intro">
+			<p>
+				[Short intro paragraph goes here — a couple of sentences about who
+				you are and what this site/you offer.]
+			</p>
+		</div>
+
+		<div class="hero-statement">
+			<h1>Your Big Statement Here</h1>
 		</div>
 
 	</header>
 
 	<!-- ============ ABOUT / SPLIT SECTION ============ -->
-	<section class="split">
+	<section class="split-row bg-white">
 		<div class="split-text">
 			<h2>About Me</h2>
 			<p>
-				[Body copy goes here. This is the left column — plain text on a
-				white background, vertically it can run as long as you need.]
+				[Body copy goes here.]
 			</p>
 		</div>
 		<div class="split-image">
@@ -58,16 +61,6 @@
 			<p>&copy; Kade Smiley. All rights reserved.</p>
 		</div>
 	</footer>
-
-	<!-- Scripts (kept in case you re-add carousel/dropdown behaviour later) -->
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/js/jquery.dropotron.min.js"></script>
-	<script src="assets/js/jquery.scrolly.min.js"></script>
-	<script src="assets/js/jquery.scrollex.min.js"></script>
-	<script src="assets/js/browser.min.js"></script>
-	<script src="assets/js/breakpoints.min.js"></script>
-	<script src="assets/js/util.js"></script>
-	<script src="assets/js/main.js"></script>
 
 </body>
 </html>
