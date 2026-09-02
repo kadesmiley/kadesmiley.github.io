@@ -1,19 +1,50 @@
 /* ===================================================
    site.css — shared layout for every page
-   (hero on home, fixed nav + repeating rows on inner pages)
    =================================================== */
+
+/* ---------- THEME VARIABLES ---------- */
+/* Everything below is a "custom property" — a named value we can
+   reuse anywhere with var(--name). Change a color once here and it
+   updates everywhere it's used. The [data-theme="dark"] block further
+   down overrides these same names, which is the entire dark-mode
+   mechanism: nothing else in this file needs to know light vs dark
+   exists — it just uses var(--bg), var(--text), etc. */
+:root {
+	--nav-height: 88px;
+
+	--bg: #ffffff;         /* main page background */
+	--bg-alt: #ebebf0;     /* alternate section background (light gray) */
+	--text: #111111;
+	--text-muted: #555555;
+	--nav-bg: rgba(255, 255, 255, 0.85);
+	--nav-text: #111111;
+	--rule-color: rgba(0, 0, 0, 0.15);
+	--card-bg-hover: 0.85; /* image opacity on card hover */
+}
+
+/* Dark theme: same variable names, different values. Applied by
+   putting data-theme="dark" on the <html> element — see theme.js. */
+html[data-theme="dark"] {
+	--bg: #202023;
+	--bg-alt: #18181a;
+	--text: #eeeeee;
+	--text-muted: #b5b5b8;
+	--nav-bg: rgba(20, 20, 22, 0.85);
+	--nav-text: #ffffff;
+	--rule-color: rgba(255, 255, 255, 0.15);
+}
 
 * { box-sizing: border-box; }
 
 body {
 	margin: 0;
 	font-family: -apple-system, "Helvetica Neue", Arial, sans-serif;
+	background: var(--bg);
+	color: var(--text);
+	transition: background 0.2s ease, color 0.2s ease;
 }
 
 /* ---------- SHARED FIXED NAV ---------- */
-/* Always fixed, always this one style, on every page (including home) —
-   this avoids nav text becoming unreadable when it scrolls over
-   different-colored backgrounds. */
 .site-nav {
 	position: fixed;
 	top: 0;
@@ -24,24 +55,13 @@ body {
 	justify-content: space-between;
 	align-items: center;
 	padding: 1.5em 3em;
-	background: rgba(255, 255, 255, 0.85);
-	color: #111;
+	background: var(--nav-bg);
+	color: var(--nav-text);
 }
 
 .site-nav a {
-	color: #111;
+	color: var(--nav-text);
 	text-decoration: none;
-}
-
-/* dark variant — nav matches a dark page background (used on Research
-   for now; this is the start of a site-wide dark mode). */
-.site-nav.dark {
-	background: rgba(20, 20, 22, 0.85);
-	color: #fff;
-}
-
-.site-nav.dark a {
-	color: #fff;
 }
 
 .site-logo {
@@ -52,6 +72,7 @@ body {
 
 .site-nav ul {
 	display: flex;
+	align-items: center;
 	gap: 2em;
 	list-style: none;
 	margin: 0;
@@ -62,14 +83,19 @@ body {
 	text-decoration: underline;
 }
 
-/* height of the nav, used to offset content below it */
-:root {
-	--nav-height: 88px;
+/* the toggle button itself — plain, inherits nav's current text color
+   so it automatically matches light or dark nav with no extra rules */
+.theme-toggle {
+	background: none;
+	border: none;
+	font-size: 1.2em;
+	line-height: 1;
+	cursor: pointer;
+	color: inherit;
+	padding: 0;
 }
 
 /* ---------- HERO ---------- */
-/* Homepage: just a photo, no text. Inner pages can add a centered
-   .hero-title on top of it (see .hero-title below). */
 .hero {
 	position: relative;
 	height: 60vh;
@@ -80,8 +106,6 @@ body {
 	justify-content: center;
 }
 
-/* dark scrim so text stays legible over a photo — add class="hero has-title"
-   on pages where the hero includes a centered title */
 .hero.has-title::before {
 	content: "";
 	position: absolute;
@@ -99,17 +123,17 @@ body {
 }
 
 /* ---------- REUSABLE SPLIT ROW ---------- */
-/* Used for: homepage "About Me", and every Research-page block.
-   Stack as many .split-row sections as you need, in order. */
 .split-row {
 	display: flex;
 	min-height: 100vh;
-	padding-top: var(--nav-height); /* keeps content clear of the fixed nav */
-	padding-bottom: 4em; /* buffer before whatever comes next */
+	padding-top: var(--nav-height);
+	padding-bottom: 4em;
+	background: var(--bg);
+	color: var(--text);
 }
 
-.split-row.bg-light { background: #ebebf0; }
-.split-row.bg-white { background: #fff; }
+.split-row.bg-light { background: var(--bg-alt); }
+.split-row.bg-white { background: var(--bg); }
 
 .split-text {
 	flex: 1 1 50%;
@@ -125,6 +149,10 @@ body {
 	margin: 0 0 0.5em 0;
 }
 
+.split-text p {
+	color: var(--text-muted);
+}
+
 .split-image {
 	flex: 1 1 50%;
 }
@@ -136,17 +164,19 @@ body {
 	display: block;
 }
 
-/* Only the first row on a page needs to clear the fixed nav */
 .split-row + .split-row {
 	padding-top: 0;
 }
 
 /* ---------- CARD GRID ---------- */
-/* Reusable anywhere you need a grid of clickable thumbnail cards:
-   Research (current/past), Essays (blog posts), Outreach (articles). */
 .card-section {
 	padding: 2.5em 3em 5em 3em;
+	background: var(--bg);
+	color: var(--text);
 }
+
+.card-section.bg-light { background: var(--bg-alt); }
+.card-section.bg-white { background: var(--bg); }
 
 .card-section h2 {
 	font-size: 2.2em;
@@ -154,10 +184,9 @@ body {
 	margin: 0;
 }
 
-/* thin rule under the heading, same width as the card grid below it */
 .section-rule {
 	border: none;
-	border-top: 1px solid rgba(0, 0, 0, 0.15);
+	border-top: 1px solid var(--rule-color);
 	margin: 0.9em 0 2.5em 0;
 }
 
@@ -183,45 +212,26 @@ body {
 }
 
 .card:hover img {
-	opacity: 0.85;
+	opacity: var(--card-bg-hover);
 }
 
 .card h3 {
 	font-size: 1.15em;
 	font-weight: 700;
 	margin: 0.9em 0 0.35em 0;
+	color: var(--text);
 }
 
 .card p {
 	font-size: 0.95em;
 	line-height: 1.5;
-	color: #555;
+	color: var(--text-muted);
 	margin: 0;
 }
 
-/* Light variants, used for stacking sections like .split-row did */
-.card-section.bg-light { background: #ebebf0; }
-.card-section.bg-white { background: #fff; }
-
-/* Dark variant — dark-mode gray background + light text */
-.card-section.bg-dark {
-	background: #202023;
-	color: #eee;
-}
-
-.card-section.bg-dark .section-rule {
-	border-top-color: rgba(255, 255, 255, 0.15);
-}
-
-.card-section.bg-dark .card h3 {
-	color: #fff;
-}
-
-.card-section.bg-dark .card p {
-	color: #b5b5b8;
-}
+/* ---------- FOOTER ---------- */
 .site-footer {
-	background: #2f6fb3; /* placeholder color */
+	background: #2f6fb3; /* placeholder color — kept constant in both themes for now */
 	color: #fff;
 	padding: 2em 3em;
 }
@@ -250,14 +260,8 @@ body {
 		gap: 1em;
 	}
 
-	.hero-intro {
-		margin-bottom: 2em;
-		padding: 0 1.5em;
-		font-size: 1.1em;
-	}
-
-	.hero-statement h1 {
-		font-size: 12vw;
+	.hero-title {
+		font-size: 8vw;
 	}
 
 	.split-row,

@@ -4,11 +4,20 @@
 	<title>Research — Kade Smiley</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<!-- Same as index.html, except the fallback here defaults to dark
+	     if the visitor has never toggled anything before. A saved
+	     choice from localStorage still wins over this default. -->
+	<script>
+		(function () {
+			var saved = localStorage.getItem("theme");
+			document.documentElement.setAttribute("data-theme", saved || "dark");
+		})();
+	</script>
 	<link rel="stylesheet" href="assets/css/site.css" />
 </head>
 <body>
 
-	<nav class="site-nav dark">
+	<nav class="site-nav">
 		<a href="index.html" class="site-logo">TITLE</a>
 		<ul>
 			<li><a href="index.html">Home</a></li>
@@ -17,6 +26,7 @@
 			<li><a href="outreach.html">Outreach</a></li>
 			<li><a href="contact.html">Contact</a></li>
 			<li><a href="essays.html">Essays</a></li>
+			<li><button class="theme-toggle" aria-label="Toggle dark mode">🌙</button></li>
 		</ul>
 	</nav>
 
@@ -26,7 +36,7 @@
 	</header>
 
 	<!-- ============ CURRENT RESEARCH ============ -->
-	<section class="card-section bg-dark">
+	<section class="card-section bg-white">
 		<h2>Current</h2>
 		<hr class="section-rule" />
 		<div class="card-grid">
@@ -49,7 +59,7 @@
 	</section>
 
 	<!-- ============ PAST RESEARCH ============ -->
-	<section class="card-section bg-dark">
+	<section class="card-section bg-light">
 		<h2>Past</h2>
 		<hr class="section-rule" />
 		<div class="card-grid">
@@ -73,5 +83,6 @@
 		</div>
 	</footer>
 
+	<script src="assets/js/theme.js"></script>
 </body>
 </html>
