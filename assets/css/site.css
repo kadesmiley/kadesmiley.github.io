@@ -33,6 +33,17 @@ body {
 	text-decoration: none;
 }
 
+/* dark variant — nav matches a dark page background (used on Research
+   for now; this is the start of a site-wide dark mode). */
+.site-nav.dark {
+	background: rgba(20, 20, 22, 0.85);
+	color: #fff;
+}
+
+.site-nav.dark a {
+	color: #fff;
+}
+
 .site-logo {
 	font-weight: 800;
 	font-size: 1.4em;
@@ -134,13 +145,20 @@ body {
 /* Reusable anywhere you need a grid of clickable thumbnail cards:
    Research (current/past), Essays (blog posts), Outreach (articles). */
 .card-section {
-	padding: 5em 3em;
+	padding: 2.5em 3em 5em 3em;
 }
 
 .card-section h2 {
 	font-size: 2.2em;
 	font-weight: 800;
-	margin: 0 0 1em 0;
+	margin: 0;
+}
+
+/* thin rule under the heading, same width as the card grid below it */
+.section-rule {
+	border: none;
+	border-top: 1px solid rgba(0, 0, 0, 0.15);
+	margin: 0.9em 0 2.5em 0;
 }
 
 .card-grid {
@@ -181,10 +199,27 @@ body {
 	margin: 0;
 }
 
-/* Alternate background so a page can stack card-sections the way
-   .split-row does, e.g. current = light, past = white */
+/* Light variants, used for stacking sections like .split-row did */
 .card-section.bg-light { background: #ebebf0; }
 .card-section.bg-white { background: #fff; }
+
+/* Dark variant — dark-mode gray background + light text */
+.card-section.bg-dark {
+	background: #202023;
+	color: #eee;
+}
+
+.card-section.bg-dark .section-rule {
+	border-top-color: rgba(255, 255, 255, 0.15);
+}
+
+.card-section.bg-dark .card h3 {
+	color: #fff;
+}
+
+.card-section.bg-dark .card p {
+	color: #b5b5b8;
+}
 .site-footer {
 	background: #2f6fb3; /* placeholder color */
 	color: #fff;
