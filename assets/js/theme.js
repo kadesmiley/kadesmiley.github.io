@@ -7,24 +7,17 @@ document.addEventListener("DOMContentLoaded", function () {
 	var btn = document.querySelector(".theme-toggle");
 	if (!btn) return;
 
+	// One fixed icon (Font Awesome's circle-half-stroke, inlined as SVG
+	// in each page's nav) represents the toggle itself rather than the
+	// current state, so there's no icon or label to swap here — just
+	// flip the theme.
 	function isDark() {
 		return document.documentElement.getAttribute("data-theme") === "dark";
-	}
-
-	function updateIcon() {
-		btn.textContent = isDark() ? "☀️" : "🌙";
-		btn.setAttribute(
-			"aria-label",
-			isDark() ? "Switch to light mode" : "Switch to dark mode"
-		);
 	}
 
 	btn.addEventListener("click", function () {
 		var next = isDark() ? "light" : "dark";
 		document.documentElement.setAttribute("data-theme", next);
 		localStorage.setItem("theme", next);
-		updateIcon();
 	});
-
-	updateIcon();
 });

@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>Research — Kade Smiley</title>
+	<title>CV — Kade Smiley</title>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 	<!-- Same as index.html, except the fallback here defaults to dark
@@ -21,8 +21,8 @@
 		<a href="index.html" class="site-logo">TITLE</a>
 		<ul>
 			<li><a href="index.html">Home</a></li>
-			<li><a href="research.html" class="active">Research</a></li>
-			<li><a href="cv.html">CV</a></li>
+			<li><a href="research.html">Research</a></li>
+			<li><a href="cv.html" class="active">CV</a></li>
 			<li><a href="outreach.html">Outreach</a></li>
 			<li><a href="contact.html">Contact</a></li>
 			<li><a href="essays.html">Essays</a></li>
@@ -32,49 +32,19 @@
 
 	<!-- ============ HERO ============ -->
 	<header class="hero has-title">
-		<div class="hero-bg hero-bg-research"></div>
-		<h1 class="hero-title">Research</h1>
+		<div class="hero-bg hero-bg-cv"></div>
+		<h1 class="hero-title">CV</h1>
 	</header>
 
-	<!-- ============ CURRENT RESEARCH ============ -->
+	<!-- ============ CV ============ -->
+	<!-- The PDF is the one thing that gets updated here — everything
+	     else on this page just points at it, so a new CV only ever
+	     means replacing assets/pdf/Kade_Smiley_CV.pdf. -->
 	<section class="card-section bg-white">
-		<h2>Current</h2>
-		<hr class="section-rule" />
-		<div class="card-grid">
-			<a class="card" href="projects/project-1.pdf">
-				<img src="images/pic07.jpg" alt="" />
-				<h3>[Project Title]</h3>
-				<p>[One or two lines describing this project.]</p>
-			</a>
-			<a class="card" href="projects/project-2.pdf">
-				<img src="images/pic08.jpg" alt="" />
-				<h3>[Project Title]</h3>
-				<p>[One or two lines describing this project.]</p>
-			</a>
-			<a class="card" href="projects/project-3.pdf">
-				<img src="images/pic09.jpg" alt="" />
-				<h3>[Project Title]</h3>
-				<p>[One or two lines describing this project.]</p>
-			</a>
+		<div class="cv-actions">
+			<a class="btn" href="assets/pdf/Kade_Smiley_CV.pdf" download>Download PDF</a>
 		</div>
-	</section>
-
-	<!-- ============ PAST RESEARCH ============ -->
-	<section class="card-section bg-light">
-		<h2>Past</h2>
-		<hr class="section-rule" />
-		<div class="card-grid">
-			<a class="card" href="projects/project-4.pdf">
-				<img src="images/pic10.jpg" alt="" />
-				<h3>[Project Title]</h3>
-				<p>[One or two lines describing this project.]</p>
-			</a>
-			<a class="card" href="projects/project-5.pdf">
-				<img src="images/pic11.jpg" alt="" />
-				<h3>[Project Title]</h3>
-				<p>[One or two lines describing this project.]</p>
-			</a>
-		</div>
+		<iframe class="cv-embed" src="assets/pdf/Kade_Smiley_CV.pdf" title="Kade Smiley CV"></iframe>
 	</section>
 
 	<!-- ============ FOOTER ============ -->

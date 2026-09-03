@@ -102,26 +102,76 @@ body {
 	padding: 0;
 }
 
+.theme-toggle svg {
+	width: 1em;
+	height: 1em;
+	display: block;
+	fill: currentColor;
+}
+
 /* ---------- HERO ---------- */
+/* .hero clips (overflow: hidden) at the size the hero always was.
+   The photo itself now lives on a separate .hero-bg layer inside it,
+   made taller than the box (see the negative top / oversized height
+   below) so assets/js/parallax.js can nudge it up and down as the
+   page scrolls without ever exposing a bare edge. See parallax.js for
+   why this reads as "parallax" rather than just decoration. */
 .hero {
 	position: relative;
 	height: 100vh;
-	background: url("../../images/pic06.jpg") no-repeat center center;
-	background-size: cover;
+	overflow: hidden;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 }
 
+/* Structural properties only — no image here. Each page adds its own
+   modifier class (.hero-bg-index, .hero-bg-research, etc., right
+   below) to supply the actual photo, so every hero can show a
+   different picture. A page that forgets its modifier class falls
+   back to this plain color instead of silently inheriting some other
+   page's photo. */
+.hero-bg {
+	position: absolute;
+	left: 0;
+	right: 0;
+	top: -25vh;
+	height: calc(100% + 50vh);
+	background-color: var(--card-bg);
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-size: cover;
+	will-change: transform;
+	z-index: 0;
+}
+
+.hero-bg-index    { background-image: url("../../images/header.jpg"); }
+.hero-bg-research { background-image: url("../../images/pic03.jpg"); }
+.hero-bg-outreach { background-image: url("../../images/pic04.jpg"); }
+.hero-bg-essays   { background-image: url("../../images/pic05.jpg"); }
+.hero-bg-cv       { background-image: url("../../images/pic02.jpg"); }
+.hero-bg-contact  { background-image: url("../../images/pic08.jpg"); }
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-bg { transform: none !important; }
+}
+
+/* ::before generates as if it were the hero's first child — ahead of
+   the real .hero-bg element in the DOM below it — so without explicit
+   z-index the overlay would paint *under* the photo instead of over
+   it. Stacking these three by hand (image, then overlay, then title)
+   keeps the layering correct regardless of source order. */
 .hero.has-title::before {
 	content: "";
 	position: absolute;
 	inset: 0;
 	background: rgba(0, 0, 0, 0.35);
+	z-index: 1;
 }
 
 .hero-title {
 	position: relative;
+	z-index: 2;
 	color: #fff;
 	font-size: 3em;
 	font-weight: 800;
@@ -305,7 +355,7 @@ body {
 	overflow: hidden;
 }
 
-/* optional — omit this span (as essays.html does) for cards that
+/* optional. omit this span (as essays.html does) for cards that
    don't need an outlet/venue + date eyebrow line */
 .article-card-kicker {
 	font-size: 0.78em;
@@ -340,6 +390,45 @@ body {
 	overflow: hidden;
 }
 
+/* ---------- BUTTON ---------- */
+/* First "call to action" style in the system — used by the CV page's
+   Download link today. Built from --accent rather than the card
+   tokens since it's meant to read as an action, not a surface. */
+.btn {
+	display: inline-block;
+	background: var(--accent);
+	color: #fff;
+	font-weight: 700;
+	text-decoration: none;
+	padding: 0.7em 1.4em;
+	border-radius: 8px;
+	box-shadow: var(--card-shadow);
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover {
+	transform: translateY(-2px);
+	box-shadow: var(--card-shadow-hover);
+}
+
+/* ---------- CV EMBED ---------- */
+.cv-actions {
+	max-width: 900px;
+	margin: 0 auto 1.5em auto;
+}
+
+.cv-embed {
+	display: block;
+	width: 100%;
+	max-width: 900px;
+	height: 85vh;
+	margin: 0 auto;
+	border: none;
+	border-radius: 10px;
+	box-shadow: var(--card-shadow);
+	background: #fff;
+}
+
 /* ---------- FOOTER ---------- */
 .site-footer {
 	background: #2f6fb3; /* placeholder color — kept constant in both themes for now */
@@ -355,6 +444,76 @@ body {
 
 .site-footer p {
 	margin: 0;
+}
+
+/* ---------- CONTACT ---------- */
+.contact-intro {
+	max-width: 700px;
+	margin: 0 auto;
+	padding-bottom: 1em;
+	text-align: center;
+	font-size: 1.1em;
+	color: var(--text-muted);
+}
+
+.contact-intro a {
+	color: var(--accent);
+}
+
+.social-grid {
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: 1em;
+	max-width: 700px;
+	margin: 0 auto;
+}
+
+/* Brand logos ship in fixed colors, so — like --accent already does —
+   the tile they sit on is deliberately constant across themes rather
+   than following --bg/--card-bg. A black GitHub mark would vanish on
+   a dark card otherwise. */
+.social-tile {
+	display: flex;
+	align-items: center;
+	gap: 0.9em;
+	height: 76px;
+	padding: 0 1.2em;
+	background: #ffffff;
+	color: #16181d;
+	border-radius: 10px;
+	box-shadow: var(--card-shadow);
+	text-decoration: none;
+	transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.social-tile:hover {
+	transform: translateY(-3px);
+	box-shadow: var(--card-shadow-hover);
+}
+
+.social-tile img {
+	height: 34px;
+	width: 34px;
+	object-fit: contain;
+	flex: 0 0 auto;
+}
+
+.social-tile span {
+	font-weight: 700;
+	font-size: 1.05em;
+}
+
+/* GitHub's own asset already contains the wordmark, so that tile is
+   just the logo — no separate label needed. */
+.social-tile.logo-only img {
+	height: 26px;
+	width: auto;
+	max-width: 100%;
+}
+
+/* No brand asset for the personal site — text only. */
+.social-tile.text-only span {
+	font-size: 1.05em;
 }
 
 /* ---------- MOBILE ---------- */
@@ -412,5 +571,9 @@ body {
 
 	.article-card-body {
 		padding: 1.2em;
+	}
+
+	.social-grid {
+		grid-template-columns: 1fr;
 	}
 }

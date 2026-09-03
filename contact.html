@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Contact — Kade Smiley</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<!-- Same as index.html, except the fallback here defaults to dark
+	     if the visitor has never toggled anything before. A saved
+	     choice from localStorage still wins over this default. -->
+	<script>
+		(function () {
+			var saved = localStorage.getItem("theme");
+			document.documentElement.setAttribute("data-theme", saved || "dark");
+		})();
+	</script>
+	<link rel="stylesheet" href="assets/css/site.css" />
+</head>
+<body>
+
+	<nav class="site-nav">
+		<a href="index.html" class="site-logo">TITLE</a>
+		<ul>
+			<li><a href="index.html">Home</a></li>
+			<li><a href="research.html">Research</a></li>
+			<li><a href="cv.html">CV</a></li>
+			<li><a href="outreach.html">Outreach</a></li>
+			<li><a href="contact.html" class="active">Contact</a></li>
+			<li><a href="essays.html">Essays</a></li>
+			<li><button class="theme-toggle" aria-label="Toggle dark mode"><svg viewBox="0 0 512 512" aria-hidden="true"><path d="M448 256c0-106-86-192-192-192V448c106 0 192-86 192-192zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256z"/></svg></button></li>
+		</ul>
+	</nav>
+
+	<!-- ============ HERO ============ -->
+	<header class="hero has-title">
+		<div class="hero-bg hero-bg-contact"></div>
+		<h1 class="hero-title">Contact</h1>
+	</header>
+
+	<!-- ============ SOCIALS ============ -->
+	<section class="card-section bg-white">
+		<p class="contact-intro">Please reach out to collaborate with me or to chat! You can find my information below, or reach me at <a href="mailto:kade.smiley@outlook.com">kade.smiley@outlook.com</a>. I dont use any regular social media, so you can find my personal website below, that acts as a centralized social media for me.</p>
+		<h2>You can find me at:</h2>
+		<hr class="section-rule" />
+		<div class="social-grid">
+			<a class="social-tile" href="https://orcid.org/0009-0006-7261-4572" target="_blank" rel="noopener">
+				<img src="assets/icons/social/orcid.svg" alt="" />
+				<span>ORCID</span>
+			</a>
+			<a class="social-tile" href="https://ebird.org/profile/NDIwNTAxNw" target="_blank" rel="noopener">
+				<img src="assets/icons/social/ebird.png" alt="" />
+				<span>eBird</span>
+			</a>
+			<a class="social-tile" href="https://www.linkedin.com/in/kade-smiley-5277a7a8/" target="_blank" rel="noopener">
+				<img src="assets/icons/social/linkedin.png" alt="" />
+				<span>LinkedIn</span>
+			</a>
+			<a class="social-tile logo-only" href="https://github.com/kadesmiley" target="_blank" rel="noopener">
+				<img src="assets/icons/social/github.svg" alt="GitHub" />
+			</a>
+			<!-- Placeholder icon — swap assets/icons/social/email-placeholder.svg
+			     for Kade's own email PNG when it's ready. -->
+			<a class="social-tile" href="mailto:kade.smiley@outlook.com">
+				<img src="assets/icons/social/email-placeholder.svg" alt="" />
+				<span>Email</span>
+			</a>
+			<a class="social-tile text-only" href="https://kadesmiley.github.io/me" target="_blank" rel="noopener">
+				<span>Personal Site</span>
+			</a>
+		</div>
+	</section>
+
+	<!-- ============ FOOTER ============ -->
+	<footer class="site-footer">
+		<div class="site-footer-inner">
+			<p>&copy; Kade Smiley. All rights reserved.</p>
+		</div>
+	</footer>
+
+	<script src="assets/js/theme.js"></script>
+	<script src="assets/js/parallax.js"></script>
+</body>
+</html>
