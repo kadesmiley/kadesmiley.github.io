@@ -212,6 +212,7 @@ body {
 
 .split-image {
 	flex: 1 1 50%;
+	padding-right: 4em;
 }
 
 .split-image img {
@@ -547,6 +548,10 @@ body {
 
 	.split-text {
 		padding: 2em;
+	}
+
+	.split-image {
+		padding-right: 0;
 	}
 
 	.split-image img {
