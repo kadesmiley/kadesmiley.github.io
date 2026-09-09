@@ -145,12 +145,12 @@ body {
 	z-index: 0;
 }
 
-.hero-bg-index    { background-image: url("../../images/header.jpg"); }
-.hero-bg-research { background-image: url("../../images/pic03.jpg"); }
-.hero-bg-outreach { background-image: url("../../images/pic04.jpg"); }
-.hero-bg-essays   { background-image: url("../../images/pic05.jpg"); }
-.hero-bg-cv       { background-image: url("../../images/pic02.jpg"); }
-.hero-bg-contact  { background-image: url("../../images/pic08.jpg"); }
+.hero-bg-index    { background-image: url("../../images/home_hero.jpg"); }
+.hero-bg-research { background-image: url("../../images/research_hero.jpg"); }
+.hero-bg-outreach { background-image: url("../../images/outreach_hero.jpg"); }
+.hero-bg-essays   { background-image: url("../../images/essays_hero.jpg"); }
+.hero-bg-cv       { background-image: url("../../images/cv_hero.jpg"); }
+.hero-bg-contact  { background-image: url("../../images/contact_hero.jpg"); }
 
 @media (prefers-reduced-motion: reduce) {
 	.hero-bg { transform: none !important; }
