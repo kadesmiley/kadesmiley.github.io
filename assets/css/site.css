@@ -383,7 +383,7 @@ body {
 	line-height: 1.5;
 	color: var(--text-muted);
 	margin: 0;
-	max-width: 60ch;
+	max-width: 120ch;
 	display: -webkit-box;
 	-webkit-line-clamp: 2;
 	line-clamp: 2;
