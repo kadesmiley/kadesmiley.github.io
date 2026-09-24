@@ -210,6 +210,11 @@ body {
 	color: var(--text-muted);
 }
 
+.about-copy {
+	font-size: 1.4em;
+	line-height: 1.7;
+}
+
 .split-image {
 	flex: 1 1 50%;
 	padding-right: 4em;
