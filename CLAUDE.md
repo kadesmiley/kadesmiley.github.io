@@ -10,6 +10,8 @@ Kade Smiley's personal site (`kadesmiley.github.io`) — a static, hand-written 
 
 There is no install, build, lint, or test command — there's no `package.json`. Edit the HTML/CSS files directly and open them in a browser (or use a local static file server) to check changes.
 
+One exception: `essays/index.html` contains Jekyll/Liquid code (`{% %}`, `{{ }}`) that GitHub Pages runs on its servers at push time to list the essay PDFs. Opened locally, that page shows the raw code instead of cards — check it on the live site after pushing (1–2 minutes). See "Essays and research folders" below.
+
 ## URL structure
 
 Every page except the homepage lives at `<name>/index.html` rather than `<name>.html` — e.g. `research/index.html`, not `research.html` — so that GitHub Pages serves it at the clean URL `/research/` (any static host auto-serves `index.html` for a folder) instead of `/research.html`. This is a GitHub Pages constraint, not a preference: there's no server config on Pages to rewrite bare `.html` URLs, so a folder-plus-`index.html` per page is the only way to drop the extension. `/research` (no trailing slash) still works — GitHub's server 301-redirects it to `/research/` — but `/research/` is the real, canonical URL.
@@ -20,7 +22,7 @@ Because of this, **every internal link, stylesheet, script, and image path in ev
 
 ## Architecture
 
-**Pages** (`index.html`, `research/index.html`, `outreach/index.html`, `essays/index.html`, `cv/index.html`, `contact/index.html`) share one hand-rolled layout, not a templating system — each page repeats the same `<nav>` and `<footer>` markup verbatim. When changing shared chrome (nav links, footer), update it in every page. `research/index.html`'s and `essays/index.html`'s cards both link straight to a PDF (`/projects/project-1.pdf`, `/essays/essay-1.pdf`) rather than to a detail HTML page — a project or essay's whole "page" is just that file. See "Essays and research folders" below.
+**Pages** (`index.html`, `research/index.html`, `outreach/index.html`, `essays/index.html`, `cv/index.html`, `contact/index.html`) share one hand-rolled layout, not a templating system — each page repeats the same `<nav>` and `<footer>` markup verbatim. When changing shared chrome (nav links, footer), update it in every page. `research/index.html`'s and `essays/index.html`'s cards both link straight to a PDF (`/projects/project-1.pdf`, `/essays/<date> <title>.pdf`) rather than to a detail HTML page — a project or essay's whole "page" is just that file. Research cards are hand-written; essay cards are generated automatically from the PDFs in `essays/`. See "Essays and research folders" below.
 
 **Styling** lives in `assets/css/site.css`, the only stylesheet actually loaded by the pages. It's organized around CSS custom properties (design tokens) defined on `:root`, then reusable structural blocks in this order: nav, hero, split-row (two-column about/bio sections), card-grid, article-list, footer, then a single mobile breakpoint at 800px that overrides all of the above. When adding new page sections, prefer extending these existing block classes over inventing new ones — see "Extending the design system" below before reaching for a new class.
 
@@ -39,7 +41,7 @@ The old HTML5 UP-based template's leftover files (`assets/css/main.css`, `noscri
 There are two distinct card components, both built on the same surface tokens (`--card-bg`, `--card-shadow`, `--card-shadow-hover`) so they read as one family, but laid out differently:
 
 - **`.card-grid` / `.card`** — image on top, title and text below, arranged in a grid (currently `repeat(3, 1fr)`, one column on mobile). Used by `research/index.html` only. Hovering fades the image slightly via `--card-bg-hover`.
-- **`.article-list` / `.article-card`** — wide horizontal rows: a fixed-size image on the left, title + description on the right, stacked full-width. Used by `outreach/index.html` and `essays/index.html`. `.article-card-kicker` is an optional small colored eyebrow line (outlet/venue + date) — include the `<span>` for it (as outreach does) or omit it (as essays does).
+- **`.article-list` / `.article-card`** — wide horizontal rows: a fixed-size image on the left, title + description on the right, stacked full-width. Used by `outreach/index.html` and `essays/index.html`. `.article-card-kicker` is an optional small colored eyebrow line — outreach uses it for outlet/venue + date; essays use it for the publish date + "PDF" (so readers know the card opens a PDF). Essay cards have no description `<p>` — they're generated from file names, which only carry a date and title.
 
 **Important, learned the hard way this session:** `.article-card` is a fixed `height: 175px`, not `min-height`, and `.article-card img` is `height: 100%` rather than left to `auto`. The first version used `min-height` + auto image height, and cards rendered at *different* heights because each row's placeholder image had different native pixel dimensions (e.g. 368×256 vs 175×139) — with `align-items: stretch` and no explicit image height, the browser factors an image's own aspect ratio into how tall the row becomes. The fix was to stop letting content (image shape *or* text length) drive the row's size at all: fix the card height, make the image fill it, and clamp the title/description to 1/2 lines (`line-clamp`) so future real content can't stretch a row taller than its siblings. **Any new fixed-size card component should follow the same rule** — give images an explicit height or `aspect-ratio`, never rely on their natural file dimensions inside a flex/grid layout you want uniform.
 
@@ -93,7 +95,7 @@ Kade may want to add more visual polish/interactivity later — some notes to ke
 - Reach for the existing tokens and card components first; a genuinely new pattern should still be built as a token-driven, theme-aware block like the ones above (light values in `:root`, dark overrides in `html[data-theme="dark"]`), not a page-specific inline style.
 - Any hover/entrance animation should respect `prefers-reduced-motion` — the hero parallax above is the first case of this (both a JS bail-out in `parallax.js` and a CSS fallback), but there's still no blanket `@media (prefers-reduced-motion: reduce)` rule covering hover transitions elsewhere in `site.css`; add one if more motion design gets added.
 - If more accent/brand colors get introduced beyond `--accent`, decide deliberately whether each should shift between light/dark or stay constant (like the footer blue currently does), rather than leaving it undefined in one theme by accident.
-- `projects/*.html` and `essays/*.html` detail pages don't exist and won't — both link straight to a PDF instead (see "Essays and research folders" below).
+- `projects/*.html` and `essays/*.html` detail pages don't exist and won't — both link straight to a PDF instead (see "Essays and research folders" below). Don't hand-add essay cards to `essays/index.html`; they're generated from the PDFs.
 
 ## CV page
 
@@ -101,6 +103,18 @@ Kade may want to add more visual polish/interactivity later — some notes to ke
 
 ## Essays and research folders
 
-Each essay (`essays/essay-1.pdf`) and each research project (`projects/project-1.pdf`) is just a PDF — same one-file-is-the-content idea as the CV page, no hand-written detail page per item. Kade writes these in Word or LaTeX (more comfortable for him than HTML, and LaTeX in particular gives real per-page customization — figures, multi-column layouts, colored callouts via `tcolorbox`, citations via `natbib`/`biblatex`) and exports to PDF. To publish one: drop the PDF in `essays/` or `projects/` and copy one of the existing `.article-card` (essays) or `.card` (research) blocks, changing its `href` to that filename and its title/blurb/image to match.
+Each essay and each research project (`projects/project-1.pdf`) is just a PDF — same one-file-is-the-content idea as the CV page, no hand-written detail page per item. A PDF always renders on its own fixed white page — it won't reflow for mobile or repaint for dark mode the way the rest of the site does (same already-accepted trade-off as the CV page's embed). Cards open the PDF directly in a new tab (`target="_blank"`), not embedded in a site page: an `<iframe>` embed like the CV page's breaks on phones (iOS shows only page 1, Android Chrome often shows nothing), while a direct link opens the phone's full-screen PDF viewer.
 
-Neither `essays/` nor `projects/` is an actual folder in the repo yet — git doesn't track empty directories, so each comes into existence the moment its first real PDF is saved at that path; there's nothing to create ahead of time. Note for local preview: a PDF embed/link always renders on its own fixed white page — it won't reflow for mobile or repaint for dark mode the way the rest of the site does (same already-accepted trade-off as the CV page's embed).
+**Research** — written in Word or LaTeX (LaTeX in particular gives real per-page customization — figures, multi-column layouts, colored callouts via `tcolorbox`, citations via `natbib`/`biblatex`) and exported to PDF. To publish one: drop the PDF in `projects/` and copy one of the existing `.card` blocks in `research/index.html`, changing its `href` to that filename and its title/blurb/image to match.
+
+**Essays** — written in Obsidian (Kade's separate private `Obsidian` repo, `Essays` vault) and exported with Obsidian's built-in **Export to PDF**, which keeps all of Obsidian's formatting (callouts, highlights, resized images). Publishing is meant to need *zero* HTML editing: save the PDF into `essays/` and push. Kade's step-by-step lives in `HOW-TO-PUBLISH.txt` at the root of the Obsidian repo (`C:\Users\kades\Obsidian`) — keep it in sync with any change to the rules below.
+
+How the automatic list works: `essays/index.html` starts with an empty `---` front matter block, which makes GitHub Pages' built-in Jekyll run its Liquid code at push time (every other page has no front matter and is copied through untouched). The loop walks `site.static_files`, keeps `.pdf` files whose path contains `/essays/`, sorts by file name descending, and emits one `.article-card` per PDF. The file name is the only metadata, so it follows a fixed contract:
+- `YYYY-MM-DD Essay Title.pdf` — the first 10 characters are the date (shown as "October 18, 2026 · PDF" in the kicker); everything after the following space is the card title. Because the date leads the name, sorting by name descending = newest first. A PDF without a date prefix still gets listed, with the whole file name as its title and just "PDF" as its kicker, but it sorts oddly.
+- Optional card picture: a `.jpg` or `.png` with *exactly* the same name next to the PDF (`essays/2026-10-18 Essay Title.jpg`). Otherwise the card uses `/images/essays_thumb_1.jpg`.
+- Spaces in file names are fine — `href`/`src` go through `uri_escape`.
+- With no PDFs, the page shows a `.essay-empty` "Coming soon" line instead.
+
+`_config.yml` exists only to `exclude: CLAUDE.md` — GitHub Pages renders stray Markdown files as public pages, and this file isn't part of the site.
+
+Neither `essays/` (beyond its `index.html`) nor `projects/` needs folders created ahead of time — git doesn't track empty directories, so each file simply appears at its path when saved.

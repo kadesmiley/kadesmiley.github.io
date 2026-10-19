@@ -396,6 +396,12 @@ body {
 	overflow: hidden;
 }
 
+/* shown on the essays page while essays/ has no PDFs yet */
+.essay-empty {
+	color: var(--text-muted);
+	margin: 0;
+}
+
 /* ---------- BUTTON ---------- */
 /* First "call to action" style in the system — used by the CV page's
    Download link today. Built from --accent rather than the card

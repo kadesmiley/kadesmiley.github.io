@@ -1,3 +1,7 @@
+---
+# Empty front matter: tells GitHub Pages' Jekyll to run the essay-list
+# code below. Every other page is plain HTML and is copied untouched.
+---
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -37,15 +41,45 @@
 	<section class="card-section bg-white">
 		<h2>Writing</h2>
 		<hr class="section-rule" />
+		<!-- Built automatically on every push: one card per PDF in this
+		     essays/ folder, named "YYYY-MM-DD Essay Title.pdf". The date
+		     prefix becomes the card's date line and sorts newest first; the
+		     rest of the name becomes the title. A .jpg or .png with the exact
+		     same name, next to the PDF, becomes the card picture. -->
 		<div class="article-list">
-			<a class="article-card" href="/essays/essay-1.pdf" target="_blank" rel="noopener">
-				<img src="/images/essays_thumb_1.jpg" alt="" />
+			{% assign pdfs = site.static_files | where: "extname", ".pdf" | sort: "basename" | reverse %}
+			{% assign essay_count = 0 %}
+			{% for pdf in pdfs %}
+				{% unless pdf.path contains "/essays/" %}{% continue %}{% endunless %}
+				{% assign essay_count = essay_count | plus: 1 %}
+
+				{% assign title = pdf.basename %}
+				{% assign date_text = "" %}
+				{% assign prefix = pdf.basename | slice: 0, 10 %}
+				{% assign dash1 = prefix | slice: 4, 1 %}
+				{% assign dash2 = prefix | slice: 7, 1 %}
+				{% if dash1 == "-" and dash2 == "-" %}
+					{% assign title = pdf.basename | slice: 11, 300 | strip %}
+					{% assign date_text = prefix | date: "%B %-d, %Y" %}
+				{% endif %}
+
+				{% assign thumb = "/images/essays_thumb_1.jpg" %}
+				{% assign thumb_jpg = "/essays/" | append: pdf.basename | append: ".jpg" %}
+				{% assign thumb_png = "/essays/" | append: pdf.basename | append: ".png" %}
+				{% for file in site.static_files %}
+					{% if file.path == thumb_jpg or file.path == thumb_png %}{% assign thumb = file.path %}{% endif %}
+				{% endfor %}
+			<a class="article-card" href="{{ pdf.path | uri_escape }}" target="_blank" rel="noopener">
+				<img src="{{ thumb | uri_escape }}" alt="" />
 				<div class="article-card-body">
-					<h3>Coming Soon</h3>
-					<p>I'm a very slow writer</p>
+					<span class="article-card-kicker">{% if date_text != "" %}{{ date_text }} · {% endif %}PDF</span>
+					<h3>{{ title }}</h3>
 				</div>
 			</a>
-			
+			{% endfor %}
+			{% if essay_count == 0 %}
+			<p class="essay-empty">Coming soon — I'm a very slow writer.</p>
+			{% endif %}
 		</div>
 	</section>
 

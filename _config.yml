@@ -1,0 +1,7 @@
+# GitHub Pages runs Jekyll on this repo automatically. Only
+# essays/index.html uses it (to list the essay PDFs) — every other page
+# is plain HTML with no front matter and is copied through untouched.
+
+# Notes for working on the site, not part of it — don't publish them.
+exclude:
+  - CLAUDE.md
