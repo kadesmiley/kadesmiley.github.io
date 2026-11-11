@@ -1,0 +1,12 @@
+# Essay card descriptions — one line per essay, shown under its title on
+# the Essays page. Optional: an essay with no line here just has no
+# description.
+#
+# Format (keep BOTH sets of quotes):
+#   "PDF file name without .pdf": "One or two sentences about the essay."
+#
+# Example:
+#   "2026-10-18 The Hummingbird at the Feeder": "Why one tiny bird defends a feeder all winter."
+#
+# Add new essays below this line.
+

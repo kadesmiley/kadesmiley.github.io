@@ -45,7 +45,8 @@
 		     essays/ folder, named "YYYY-MM-DD Essay Title.pdf". The date
 		     prefix becomes the card's date line and sorts newest first; the
 		     rest of the name becomes the title. A .jpg or .png with the exact
-		     same name, next to the PDF, becomes the card picture. -->
+		     same name, next to the PDF, becomes the card picture. An optional
+		     description comes from _data/essays.yml, keyed by file name. -->
 		<div class="article-list">
 			{% assign pdfs = site.static_files | where: "extname", ".pdf" | sort: "basename" | reverse %}
 			{% assign essay_count = 0 %}
@@ -74,6 +75,8 @@
 				<div class="article-card-body">
 					<span class="article-card-kicker">{% if date_text != "" %}{{ date_text }} · {% endif %}PDF</span>
 					<h3>{{ title }}</h3>
+					{% assign description = site.data.essays[pdf.basename] %}
+					{% if description %}<p>{{ description }}</p>{% endif %}
 				</div>
 			</a>
 			{% endfor %}
