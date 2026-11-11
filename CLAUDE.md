@@ -10,7 +10,7 @@ Kade Smiley's personal site (`kadesmiley.github.io`) — a static, hand-written 
 
 There is no install, build, lint, or test command — there's no `package.json`. Edit the HTML/CSS files directly and open them in a browser (or use a local static file server) to check changes.
 
-One exception: `essays/index.html` contains Jekyll/Liquid code (`{% %}`, `{{ }}`) that GitHub Pages runs on its servers at push time to list the essay PDFs. Opened locally, that page shows the raw code instead of cards — check it on the live site after pushing (1–2 minutes). See "Essays and research folders" below.
+One exception: `essays/index.html` contains Jekyll/Liquid code (`{% %}`, `{{ }}`) that GitHub Pages runs on its servers at push time to list the essay PDFs. Opened locally (Live Server), that code can't run, so the page hides it: the list and a local-only "Coming soon" line both carry `data-built="{{ 'yes' }}"`, which Jekyll turns into `yes` but stays literal locally, and two rules in `site.css` (next to `.essay-empty`) show whichever one matches. Locally you always see "Coming soon" — real essay cards only appear on the live site after pushing (1–2 minutes). See "Essays and research folders" below.
 
 ## URL structure
 
@@ -27,7 +27,7 @@ Because of this, **every internal link, stylesheet, script, and image path in ev
 **Styling** lives in `assets/css/site.css`, the only stylesheet actually loaded by the pages. It's organized around CSS custom properties (design tokens) defined on `:root`, then reusable structural blocks in this order: nav, hero, split-row (two-column about/bio sections), card-grid, article-list, footer, then a single mobile breakpoint at 800px that overrides all of the above. When adding new page sections, prefer extending these existing block classes over inventing new ones — see "Extending the design system" below before reaching for a new class.
 
 **Dark mode** is a `data-theme="dark"` attribute on `<html>`, toggled by `assets/js/theme.js` and persisted to `localStorage`. Every page has two theme-related pieces that must both be present:
-- An inline `<script>` in `<head>` that reads `localStorage` and sets `data-theme` *before* the page paints (avoids a flash of the wrong theme). `index.html`'s version only sets the attribute if a saved preference exists (defaults to light); the other pages default to `"dark"` when nothing is saved yet — match whichever pattern the page you're editing already uses.
+- An inline `<script>` in `<head>` that reads `localStorage` and sets `data-theme` *before* the page paints (avoids a flash of the wrong theme). Every page uses the same line — `setAttribute("data-theme", saved || "dark")` — so the whole site opens in dark mode for first-time visitors (Kade's explicit choice) and only switches to light once someone clicks the toggle. Pages used to disagree (some defaulted light), which made the background flip between pages; keep any new page on this exact pattern.
 - A `<button class="theme-toggle">` in the nav, and the `assets/js/theme.js` script tag before `</body>`.
 
 Dark-mode colors are just a second set of values for the same custom property names under the `html[data-theme="dark"]` selector in `site.css` — never hardcode a color in a new rule; add/reuse a variable instead so both themes stay in sync.

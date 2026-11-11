@@ -291,7 +291,7 @@ body {
 	font-size: 1.15em;
 	font-weight: 700;
 	margin: 0;
-	padding: 0.9em 1.1em 0.35em 1.1em;
+	padding: 0.9em 1.1rem 0.35em 1.1rem;
 	color: var(--text);
 }
 
@@ -300,7 +300,7 @@ body {
 	line-height: 1.5;
 	color: var(--text-muted);
 	margin: 0;
-	padding: 0 1.1em 1.1em 1.1em;
+	padding: 0 1.1rem 1.1em 1.1rem;
 }
 
 /* ---------- ARTICLE LIST ----------
@@ -400,6 +400,16 @@ body {
 .essay-empty {
 	color: var(--text-muted);
 	margin: 0;
+}
+
+/* Local preview (Live Server) of essays/index.html: Jekyll never ran, so
+   data-built still holds the literal "{{ 'yes' }}". Hide the raw-code list
+   and show the local-only placeholder; once built, the reverse. */
+.article-list[data-built]:not([data-built="yes"]) {
+	display: none;
+}
+.essay-local-only[data-built="yes"] {
+	display: none;
 }
 
 /* ---------- BUTTON ---------- */

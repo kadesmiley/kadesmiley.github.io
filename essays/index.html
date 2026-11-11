@@ -1,8 +1,10 @@
 ---
-# Empty front matter: tells GitHub Pages' Jekyll to run the essay-list
-# code below. Every other page is plain HTML and is copied untouched.
 ---
 <!DOCTYPE HTML>
+<!-- The two dash lines above are empty Jekyll "front matter": they tell
+     GitHub Pages to run the essay-list code below. Every other page is
+     plain HTML and is copied untouched. Kept bare because, opened
+     locally, they show as a little text at the very top. -->
 <html>
 <head>
 	<title>Essays — Kade Smiley</title>
@@ -11,7 +13,7 @@
 	<script>
 		(function () {
 			var saved = localStorage.getItem("theme");
-			if (saved) document.documentElement.setAttribute("data-theme", saved);
+			document.documentElement.setAttribute("data-theme", saved || "dark");
 		})();
 	</script>
 	<link rel="stylesheet" href="/assets/css/site.css" />
@@ -47,7 +49,11 @@
 		     rest of the name becomes the title. A .jpg or .png with the exact
 		     same name, next to the PDF, becomes the card picture. An optional
 		     description comes from _data/essays.yml, keyed by file name. -->
-		<div class="article-list">
+		<!-- Live Server can't run the code below, so it would show up as
+		     raw text. Jekyll turns {{ 'yes' }} into plain yes; site.css hides
+		     any list that isn't data-built="yes" and instead shows the
+		     local-only "Coming soon" line under it. Live site unaffected. -->
+		<div class="article-list" data-built="{{ 'yes' }}">
 			{% assign pdfs = site.static_files | where: "extname", ".pdf" | sort: "basename" | reverse %}
 			{% assign essay_count = 0 %}
 			{% for pdf in pdfs %}
@@ -84,6 +90,7 @@
 			<p class="essay-empty">Coming soon — I'm a very slow writer.</p>
 			{% endif %}
 		</div>
+		<p class="essay-empty essay-local-only" data-built="{{ 'yes' }}">Coming soon — I'm a very slow writer.</p>
 	</section>
 
 	<!-- ============ FOOTER ============ -->
